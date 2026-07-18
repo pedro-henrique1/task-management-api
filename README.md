@@ -1,81 +1,174 @@
-<h1 align="center" style="font-weight: bold;">Todo List API</h1>
+<h1 align="center">Task Management API</h1>
 
 <p align="center">
- <a href="#tech">Tecnologias</a> • 
- <a href="#started">Como Começar</a> • 
-  <a href="#routes">API Endpoints</a> •
- <a href="#contribute">Contribuindo</a>
+  API REST para gerenciamento de tarefas desenvolvida com NestJS e TypeScript.
 </p>
 
 <p align="center">
-<b>Uma API RESTful simples para gerenciar uma lista de tarefas (To-Do List). O projeto fornece endpoints para criar, listar, atualizar e deletar tarefas.</b>
+  <a href="#tecnologias">Tecnologias</a> •
+  <a href="#funcionalidades">Funcionalidades</a> •
+  <a href="#como-executar">Como executar</a> •
+  <a href="#endpoints">Endpoints</a> •
+  <a href="#contribuindo">Contribuindo</a>
 </p>
 
-<h2 id="technologies">💻 Tecnologias</h2>
+## 📌 Sobre o projeto
 
-- Node
-- Nestjs
-- Docker
+A **Task Management API** é uma API REST para gerenciamento de tarefas, permitindo criar, consultar, atualizar e excluir tarefas.
+
+O projeto foi desenvolvido com **NestJS e TypeScript**, utilizando **Prisma ORM** para acesso ao banco de dados, **Redis** e **Docker** para padronização e execução do ambiente.
+
+## 💻 Tecnologias
+
+- Node.js
+- TypeScript
+- NestJS
+- Prisma ORM
+- MySQL
 - Redis
+- Docker
+- Docker Compose
 
-<h2 id="started">🚀 Como Começar</h2>
+## ⚙️ Funcionalidades
 
-Esta seção detalha os passos necessários para configurar e executar a API localmente. A forma mais recomendada de executar este projeto é utilizando Docker e Docker Compose.
+- Criar novas tarefas
+- Listar todas as tarefas
+- Atualizar informações de uma tarefa
+- Alterar o status de conclusão
+- Excluir tarefas
 
-<h3>Prerequisites</h3>
+## 🚀 Como executar
 
-Here you list all prerequisites necessary for running your project. For example:
+A forma recomendada de executar o projeto é utilizando **Docker e Docker Compose**, permitindo iniciar a aplicação e suas dependências de forma padronizada.
 
-- [Docker](https://docs.docker.com/get-started/get-docker/)
-- Docker Compose: Geralmente já vem incluso na instalação do Docker Desktop
-- [Git](https://git-scm.com/install/)
+### Pré-requisitos
 
-<h3>Clonagem</h3>
+Antes de começar, você precisa ter instalado:
 
-Como clonar o projeto
+- Docker
+- Docker Compose
+- Git
 
-```bash
-git clone https://github.com/pedro-henrique1/api_task.git
-```
-
-<h3>Configuração de Variáveis de Ambiente</h2>
-
-Para que a API funcione corretamente e se conecte com o banco de dados e/ou serviços externos, você precisa criar um arquivo de configuração local.
-
-<h3>Starting</h3>
-
-How to start your project
+### 1. Clone o repositório
 
 ```bash
-cd todo_list
-docker-compose up -d --build
+git clone https://github.com/pedro-henrique1/task-management-api.git
 ```
 
-<h2 id="routes">📍 API Endpoints</h2>
+Entre no diretório:
 
-As pricipais rotas da Api
-​
-| Rota | Descrição | Método HTTP | Corpo Esperado |
-|-------|------------|--------------|----------------|
-| `/tasks` | Recupera todas as tarefas — busca uma lista de todas as tarefas do sistema | GET | — |
-| `/tasks` | Cria uma nova tarefa — cria uma nova tarefa com os detalhes fornecidos | POST | `{ "title": "string", "description": "string", "completed": false }` |
-| `/tasks/:id` | Exclui uma tarefa — exclui uma tarefa pelo seu ID | DELETE | — |
-| `/tasks/:id` | Atualiza o status de conclusão — atualiza o status de conclusão de uma tarefa pelo seu ID | PATCH | `{ "completed": true }` |
-| `/tasks/:id` | Atualiza uma tarefa — atualiza os dados de uma tarefa pelo seu ID | PUT | `{ "title": "string", "description": "string", "completed": false }` |
+```bash
+cd task-management-api
+```
 
-<h2 id="contribute">📫 Contribuindo</h2>
+### 2. Configure as variáveis de ambiente
 
-Aqui você pode explicar como outros desenvolvedores podem contribuir com o seu projeto.  
-Por exemplo, descrevendo como criar suas próprias branches, quais padrões seguir e como abrir um Pull Request.
+Crie o arquivo `.env` utilizando o `.env.example` como referência:
 
-1. `git clone https://github.com/pedro-henrique1/api_task.git`
-2. `git checkout -b feature/NOME-DA-FEATURE`
-3. Siga os padrões de commits definidos
-4. Abra um Pull Request explicando o problema resolvido ou a funcionalidade criada.  
-   Se houver modificações visuais, adicione capturas de tela e aguarde a revisão!
+```bash
+cp .env.example .env
+```
 
-<h3>Documentações que podem ajudar</h3>
+Configure as variáveis necessárias de acordo com seu ambiente.
 
-[📝 Como criar um Pull Request](https://www.atlassian.com/br/git/tutorials/making-a-pull-request)
+### 3. Inicie a aplicação
 
-[💾 Padrão de Commits](https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716)
+```bash
+docker compose up -d --build
+```
+
+Para acompanhar os logs:
+
+```bash
+docker compose logs -f
+```
+
+Para encerrar os containers:
+
+```bash
+docker compose down
+```
+
+## 📍 Endpoints
+
+Principais endpoints disponíveis na API:
+
+| Método | Endpoint | Descrição |
+| --- | --- | --- |
+| `GET` | `/tasks` | Lista todas as tarefas |
+| `POST` | `/tasks` | Cria uma nova tarefa |
+| `PUT` | `/tasks/:id` | Atualiza os dados de uma tarefa |
+| `PATCH` | `/tasks/:id` | Atualiza o status de conclusão |
+| `DELETE` | `/tasks/:id` | Exclui uma tarefa |
+
+### Criar uma tarefa
+
+```http
+POST /tasks
+```
+
+Exemplo de requisição:
+
+```json
+{
+  "title": "Estudar NestJS",
+  "description": "Estudar arquitetura e boas práticas com NestJS",
+  "completed": false
+}
+```
+
+### Atualizar o status
+
+```http
+PATCH /tasks/:id
+```
+
+```json
+{
+  "completed": true
+}
+```
+
+## 📁 Estrutura do projeto
+
+```text
+src
+├── app.module.ts
+├── main.ts
+├── modules
+│   ├── config
+│   │   ├── configuration.ts
+│   │   └── validation.ts
+│   ├── prisma
+│   │   ├── prisma.module.ts
+│   │   └── prisma.service.ts
+│   └── tasks
+│       ├── dtos
+│       ├── task.controller.ts
+│       ├── task.module.ts
+│       └── task.service.ts
+└── redis-client.ts
+```
+
+O projeto segue a estrutura modular do NestJS, separando as responsabilidades da aplicação em módulos.
+
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT. Consulte o arquivo [license](./LICENSE) para mais informações.
+
+
+## 🤝 Contribuindo
+
+Contribuições são bem-vindas.
+
+1. Faça um fork do projeto.
+2. Crie uma branch para sua alteração:
+
+```bash
+git checkout -b feature/nome-da-feature
+```
+
+3. Faça suas alterações e crie o commit.
+4. Envie a branch para seu fork.
+5. Abra um Pull Request descrevendo as alterações realizadas.
